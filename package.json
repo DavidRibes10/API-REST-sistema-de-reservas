@@ -1,0 +1,27 @@
+{
+    "name": "api-rest-sistema-de-reservas",
+    "version": "1.0.0",
+    "description": "Backend aplicación de reservas para una pista de tenis comunitaria",
+    "main": "index.js",
+    "scripts": {
+      "start": "node index.js",
+      "dev": "nodemon index.js",
+      "lint": "eslint .",
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "David Ribes",
+    "license": "ISC",
+    "devDependencies": {
+      "nodemon": "2.0.18",
+      "standard": "17.0.0"
+    },
+    "dependencies": {
+      "cors": "2.8.5",
+      "dotenv": "16.0.1",
+      "express": "4.18.1",
+      "mongoose": "^6.4.2"
+    },
+    "eslintConfig": {
+      "extends": "./node_modules/standard/eslinrc.json"
+    }
+  }
