@@ -36,6 +36,18 @@ app.get('/api/reservations/:id', (request, response, next) => {
     }).catch(err => next(err))
 })
 
+app.get('/api/member/:id', (request, response, next) => {
+    const { numeroSocio } = request.params
+    
+    Reservation.find({numeroSocio: this.numeroSocio}).then(reservation => {
+        if(reservation){
+            response.json(reservation)
+        } else {
+            response.status(404).end()
+        }
+    }).catch(err => next(err))
+})
+
 app.delete('/api/reservations/:id', (request, response, next) => {
     const { id } = request.params
     Reservation.findByIdAndDelete(id).then(() => {

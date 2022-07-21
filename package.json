@@ -12,6 +12,7 @@
     "author": "David Ribes",
     "license": "ISC",
     "devDependencies": {
+        "jest": "^28.1.3",
         "nodemon": "^2.0.18",
         "standard": "17.0.0"
     },
@@ -23,5 +24,8 @@
     },
     "eslintConfig": {
         "extends": "./node_modules/standard/eslinrc.json"
+    },
+    "jest": {
+        "testEnvironment" : "node"
     }
 }
