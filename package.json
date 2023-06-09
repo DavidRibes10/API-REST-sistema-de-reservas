@@ -1,0 +1,19 @@
+{
+  "name": "api-rest-sistema-de-reservas",
+  "version": "1.0.0",
+  "description": "API rest de un sistema de reservas para una pista de tenis.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavidRibes10/API-REST-sistema-de-reservas.git"
+  },
+  "author": "David Ribes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DavidRibes10/API-REST-sistema-de-reservas/issues"
+  },
+  "homepage": "https://github.com/DavidRibes10/API-REST-sistema-de-reservas#readme"
+}
