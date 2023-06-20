@@ -4,6 +4,8 @@
   "description": "API rest de un sistema de reservas para una pista de tenis.",
   "main": "index.js",
   "scripts": {
+    "dev": "NODE_ENV=development nodemon index.js",
+    "start": "NODE_ENV=production node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +17,18 @@
   "bugs": {
     "url": "https://github.com/DavidRibes10/API-REST-sistema-de-reservas/issues"
   },
-  "homepage": "https://github.com/DavidRibes10/API-REST-sistema-de-reservas#readme"
+  "homepage": "https://github.com/DavidRibes10/API-REST-sistema-de-reservas#readme",
+  "devDependencies": {
+    "nodemon": "2.0.22",
+    "standard": "17.1.0"
+  },
+  "eslintConfig": {
+    "extends": "./node_modules/standard/eslintrc.json"
+  },
+  "dependencies": {
+    "cors": "2.8.5",
+    "dotenv": "16.1.4",
+    "express": "4.18.2",
+    "mongoose": "7.2.4"
+  }
 }
