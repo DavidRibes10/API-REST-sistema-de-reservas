@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 
-const { MONGO_DB_URI, MONGO_DB_URI_TEST, NODE_ENV } = process.env
-const connectionString = NODE_ENV === 'test'
-  ? MONGO_DB_URI_TEST
+const { MONGO_DB_URI, MONGO_DB_URI_DEV, NODE_ENV } = process.env
+const connectionString = NODE_ENV === 'development'
+  ? MONGO_DB_URI_DEV
   : MONGO_DB_URI
 
 // conexión a mongodb
@@ -14,5 +14,6 @@ mongoose.connect(connectionString)
   })
 
 process.on('uncaughtException', () => {
-  mongoose.connection.disconnect()
+  mongoose.connection.close()
+  // mongoose.connection.disconnect() --> esta en teoría es la  buena, pero no funciona.
 })

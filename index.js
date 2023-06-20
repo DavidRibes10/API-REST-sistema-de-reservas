@@ -26,7 +26,9 @@ app.get('/api/reservations', (request, response, next) => {
 app.get('/api/reservations/:numeroSocio', (request, response, next) => {
   Reservation.find({ numeroSocio: request.params.numeroSocio })
     .then(reservations => {
-      response.json(reservations)
+      reservations.length > 0
+        ? response.json(reservations)
+        : response.status(204).json(reservations)
     }).catch(err => next(err))
 })
 
@@ -37,7 +39,9 @@ app.get('/api/reservation/:id', (request, response, next) => {
     if (reservation) {
       response.json(reservation)
     } else {
-      response.status(404).end()
+      response.status(204).json({
+        error: 'No se ha encontrado la reserva.'
+      })
     }
   }).catch(err => next(err))
 })
@@ -46,17 +50,31 @@ app.put('/api/reservation/:id', (request, response, next) => {
   const { id } = request.params
   const reservation = request.body
 
+  if (!reservation.dia) {
+    return response.status(400).json({
+      error: "required 'dia' is missing"
+    })
+  }
+  if (!reservation.hora) {
+    return response.status(400).json({
+      error: "required 'hora' is missing"
+    })
+  }
+
   const newReservationInfo = {
     numeroSocio: reservation.numeroSocio,
     dia: reservation.dia,
     hora: reservation.hora,
-    fechaOperacion: new Date(),
-    activa: reservation.activa
+    fechaOperacion: Date.now()
   }
   // con el new hacemos que devuelva la nota nueva. Si se deja vacio devuelve la vieja
   Reservation.findByIdAndUpdate(id, newReservationInfo, { new: true })
-    .then(result => {
-      response.json(result)
+    .then((result) => {
+      result
+        ? response.status(201).json(result)
+        : response.status(404).json({
+          error: 'No se ha modificado porque no se ha encontrado la reserva.'
+        })
     }).catch(err => next(err))
 })
 
@@ -94,8 +112,7 @@ app.post('/api/reservation', (request, response, next) => {
     numeroSocio: reservation.numeroSocio,
     dia: reservation.dia,
     hora: reservation.hora,
-    fechaOperacion: new Date(),
-    activa: true
+    fechaOperacion: Date.now()
   })
 
   newReservation.save().then(savedReservation => {
