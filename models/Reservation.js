@@ -1,10 +1,13 @@
 const { Schema, model } = require('mongoose')
 
 const reservationSchema = new Schema({
-  numeroSocio: Number,
   dia: Date,
   hora: Number,
-  fechaOperacion: Date
+  fechaOperacion: Date,
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }
 })
 
 // mapea los datos que llegan desde ls BD para que no aparezcan _id y __v y nos deje el campo ID como lo necesitamos.
