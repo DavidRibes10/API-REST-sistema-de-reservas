@@ -3,6 +3,7 @@ const { Schema, model } = require('mongoose')
 const userSchema = new Schema({
   username: String,
   passwordHash: String,
+  correo: String,
   reservas: [{
     type: Schema.Types.ObjectId,
     ref: 'Reservation'
