@@ -32,6 +32,4 @@ userRouter.post('/', async (request, response) => {
   response.json(savedUser)
 })
 
-// to do --> get users
-
 module.exports = userRouter
