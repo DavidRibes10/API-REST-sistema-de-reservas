@@ -5,7 +5,10 @@ const User = require('../models/User')
 const { SALT_ROUNDS } = process.env
 
 usersRouter.get('/', (request, response, next) => {
-  User.find({})
+  User.find({}).populate('reservas', {
+    dia: 1,
+    hora: 1
+  })
     .then(reservations => {
       response.json(reservations)
     }).catch(err => next(err))
@@ -13,7 +16,10 @@ usersRouter.get('/', (request, response, next) => {
 
 usersRouter.get('/:id', (request, response, next) => {
   const { id } = request.params
-  User.findById(id).then(user => {
+  User.findById(id).populate('reservas', {
+    dia: 1,
+    hora: 1
+  }).then(user => {
     if (user) {
       response.json(user)
     } else {
@@ -63,24 +69,7 @@ usersRouter.put('/:id', async (request, response, next) => {
   const { body } = request
   const { username, password, correo } = body
 
-  if (!username) {
-    return response.status(400).json({
-      error: "required 'username' is missing"
-    })
-  }
-  if (!password) {
-    return response.status(400).json({
-      error: "required 'password' is missing"
-    })
-  }
-
-  if (!correo) {
-    return response.status(400).json({
-      error: "required 'correo' is missing"
-    })
-  }
-
-  const passwordHash = await bcrypt.hash(password, Number(SALT_ROUNDS))
+  const passwordHash = password ? await bcrypt.hash(password, Number(SALT_ROUNDS)) : undefined
 
   const newUserInfo = {
     username,
