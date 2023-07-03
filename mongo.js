@@ -13,7 +13,7 @@ mongoose.connect(connectionString)
     console.error(err)
   })
 
-process.on('uncaughtException', () => {
-  mongoose.connection.close()
-  // mongoose.connection.disconnect() --> esta en teoría es la  buena, pero no funciona.
+process.on('uncaughtException', error => {
+  console.error(error)
+  mongoose.disconnect()
 })

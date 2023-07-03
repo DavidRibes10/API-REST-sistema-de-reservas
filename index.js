@@ -5,10 +5,12 @@ require('./mongo')
 const express = require('express')
 const app = express()
 const cors = require('cors')
+
 const notFound = require('./middleware/notFound')
 const handleErrors = require('./middleware/handleErrors')
 const usersRouter = require('./controllers/users')
 const reservationsRouter = require('./controllers/reservations')
+const loginRouter = require('./controllers/login')
 
 app.use(cors())
 app.use(express.json())
@@ -19,6 +21,7 @@ app.get('/', (request, response) => {
 
 app.use('/api/users', usersRouter)
 app.use('/api/reservations', reservationsRouter)
+app.use('/api/login', loginRouter)
 
 app.use(notFound)
 app.use(handleErrors)

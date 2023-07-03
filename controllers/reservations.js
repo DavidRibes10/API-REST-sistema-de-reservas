@@ -1,6 +1,7 @@
 const reservationsRouter = require('express').Router()
 const Reservation = require('../models/Reservation')
 const User = require('../models/User')
+const userExtractor = require('../middleware/userExtractor')
 
 reservationsRouter.get('/', (request, response, next) => {
   Reservation.find({}).populate('user', {
@@ -41,12 +42,13 @@ reservationsRouter.get('/user/:id', (request, response, next) => {
     }).catch(err => next(err))
 })
 
-reservationsRouter.post('/', async (request, response, next) => {
+reservationsRouter.post('/', userExtractor, async (request, response, next) => {
   const {
-    user,
     dia,
     hora
   } = request.body
+
+  const { user } = request
 
   if (!user) {
     return response.status(400).json({
@@ -79,7 +81,7 @@ reservationsRouter.post('/', async (request, response, next) => {
   }).catch(err => next(err))
 })
 
-reservationsRouter.put('/:id', (request, response, next) => {
+reservationsRouter.put('/:id', userExtractor, (request, response, next) => {
   const { id } = request.params
   const reservation = request.body
 
@@ -114,7 +116,7 @@ reservationsRouter.put('/:id', (request, response, next) => {
     }).catch(err => next(err))
 })
 
-reservationsRouter.delete('/:id', (request, response, next) => {
+reservationsRouter.delete('/:id', userExtractor, (request, response, next) => {
   const { id } = request.params
   Reservation.findByIdAndDelete(id).then((deleted) => {
     deleted
