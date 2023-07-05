@@ -30,7 +30,7 @@ usersRouter.get('/:id', (request, response, next) => {
   }).catch(err => next(err))
 })
 
-usersRouter.post('/', async (request, response) => {
+usersRouter.post('/', async (request, response, next) => {
   const { body } = request
   const { username, password, correo } = body
 
@@ -61,9 +61,12 @@ usersRouter.post('/', async (request, response) => {
 
   })
 
-  const savedUser = await user.save()
-
-  response.json(savedUser)
+  try {
+    const savedUser = await user.save()
+    response.json(savedUser)
+  } catch (error) {
+    next(error)
+  }
 })
 
 usersRouter.put('/:id', async (request, response, next) => {
